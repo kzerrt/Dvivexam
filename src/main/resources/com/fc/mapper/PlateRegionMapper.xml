@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.mapper.PlateRegionMapper">
+    <resultMap id="rmSelectRegions" type="com.fc.pojo.vo.list.ProvinceVo" >
+        <id property="id" column="id"/>
+        <result column="name" property="name"/>
+        <result property="plate" column="plate"/>
+        <collection property="children" ofType="com.fc.pojo.vo.list.CityVo">
+            <id property="id" column="city_id"/>
+            <result property="name" column="city_name"/>
+            <result property="plate" column="city_plate"/>
+        </collection>
+    </resultMap>
+    <select id="selectRegions" resultMap="rmSelectRegions" >
+        SELECT
+            p.id, p.name, p.plate, city.id city_id,city.name city_name, city.plate city_plate
+        FROM plate_region p LEFT JOIN
+             plate_region city ON city.province_id = p.id
+        WHERE p.province_id = 0
+        ORDER BY p.pinyin asc, city.plate asc;
+
+    </select>
+</mapper>

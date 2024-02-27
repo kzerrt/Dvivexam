@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    active: dev
+  jackson:
+    default-property-inclusion: non_null
+mybatis-plus:
+  type-aliases-package: com.fc.pojo
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    use-generated-keys: true

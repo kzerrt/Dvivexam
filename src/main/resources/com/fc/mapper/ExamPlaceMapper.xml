@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.mapper.ExamPlaceMapper">
+    <resultMap id="rmSelectPlaces" type="com.fc.pojo.vo.list.ProvinceVo" >
+        <id property="id" column="id"/>
+        <result column="name" property="name"/>
+        <result property="plate" column="plate"/>
+        <collection property="children" ofType="com.fc.pojo.vo.list.CityVo">
+            <id property="id" column="city_id"/>
+            <result property="name" column="city_name"/>
+            <result property="plate" column="city_plate"/>
+            <collection property="children" ofType="com.fc.pojo.vo.list.ExamPlaceSimpleVo">
+                <id property="id" column="exam_place_id"/>
+                <result property="name" column="exam_place_name"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <select id="selectPlaces" resultMap="rmSelectPlaces" >
+        SELECT
+            p.id, p.name, p.plate,
+            city.id city_id,city.name city_name, city.plate city_plate,
+            e.id exam_place_id, e.name exam_place_name
+        FROM plate_region p
+            JOIN plate_region city ON city.province_id = p.id
+            JOIN exam_place e ON e.city_id = city.id
+        WHERE p.province_id = 0
+        ORDER BY p.pinyin, city.plate;
+
+    </select>
+</mapper>

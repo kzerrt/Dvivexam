@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns='http://www.ehcache.org/v3'
+        xsi:schemaLocation="http://www.ehcache.org/v3
+        http://www.ehcache.org/schema/ehcache-core.xsd">
+<!--    <persistence directory="F:/ehcache"/>-->
+    <cache-template name="common">
+        <key-type>java.lang.Object</key-type>
+        <value-type>java.lang.Object</value-type>
+        <resources>
+            <heap>100</heap>
+            <!--            <offheap unit="MB">50</offheap>-->
+            <!--            <disk unit="GB" persistent="true">1</disk>-->
+        </resources>
+    </cache-template>
+    <!-- 用户登录过token延期7天-->
+    <cache alias="token" uses-template="common">
+        <expiry>
+            <tti unit="days">7</tti>
+        </expiry>
+    </cache>
+    <!--<cache alias="default">&lt;!&ndash; 默认用户登录无期限&ndash;&gt;
+        <expiry>
+            <none/>
+        </expiry>
+    </cache>-->
+</config>

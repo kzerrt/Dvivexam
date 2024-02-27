@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.mapper.ExamPlaceCourseMapper">
+    <resultMap id="rmSelectPageVos" type="com.fc.pojo.vo.list.ExamPlaceCourseVo">
+
+    </resultMap>
+    <select id="selectPageVos" resultMap="rmSelectPageVos">
+        SELECT c.id, c.name, c.price, c.type, c.intro, c.place_id,
+            p.province_id, p.city_id
+        FROM exam_place_course c
+            JOIN exam_place p ON c.place_id = p.id
+        ${ew.customSqlSegment}
+    </select>
+</mapper>
+
